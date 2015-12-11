@@ -11,7 +11,7 @@ CharacterGFXManager = function (characterManager) {
 		}
 	}
 	
-	var characterWalk = function(characterSprite, currentPos) {
+	var characterWalk = function(characterSprite, currentPos ,tileWidth, tileHeight) {
 		characterSprite.x = currentPos.X * tileWidth;
 		characterSprite.y = currentPos.Y * tileHeight;
 		characterSprite.framerate = 6;
@@ -22,12 +22,12 @@ CharacterGFXManager = function (characterManager) {
 		for(var char in chars) {
 			var currentState = chars[char].getState();
 			var currentSprite = this.charSprites[char];
-			if (currentSprite.currentAnimation != currentState) {
+			if (currentSprite && currentSprite.currentAnimation != currentState) {
 				currentSprite.gotoAndPlay(currentState);
 			}
 			switch(currentState) {
 				case 'walk':
-					characterWalk(currentSprite, this.charManager.getCharacterPosition(char))
+					characterWalk(currentSprite, this.charManager.getCharacterPosition(char), tileWidth, tileHeight)
 					break;
 				case 'idle':
 					currentSprite.framerate = 2;

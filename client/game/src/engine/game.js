@@ -12,8 +12,8 @@ Game = function() {
 	}
 	
 	var bullshit = function() {
-		self.charManager.createCharacter('christian');
-		self.gameLogic.setCharacterDestination('christian', 7, 1);
+		self.charManager.createCharacter('cromnow');
+		self.gameLogic.setCharacterDestination('cromnow', 7, 1);
 	}
 	
 	this.setUp = function() {
