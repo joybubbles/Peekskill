@@ -1,42 +1,36 @@
 CharacterGFXManager = function (characterManager) {
+	var spriteBuilder = new CharacterSpriteBuilder();
 	this.charManager = characterManager;
 	this.charSprites = [];
 	
 	this.loadCharacterAnimations = function(stage) {
 		var chars = this.charManager.getCharacters();
 		for(var char in chars) {
-			var data = {
-				images: ["/characters/cromnow/sprites.png"],
-				frames: {width:105, height:195},
-				framerate: 6,
-				animations: {
-					walk:[12,14],
-					idle:[0, 11]
-				}
-			};
-        	var spriteSheet = new createjs.SpriteSheet(data);
-        	christian = new createjs.Sprite(spriteSheet, "walk");
-			this.charSprites[char] = christian;
-        	stage.addChild(christian);
+			this.charSprites[char] = spriteBuilder.build(char);
+        	stage.addChild(this.charSprites[char]);
 		}
+	}
+	
+	var characterWalk = function(characterSprite, currentPos) {
+		characterSprite.x = currentPos.X * tileWidth;
+		characterSprite.y = currentPos.Y * tileHeight;
+		characterSprite.framerate = 6;
 	}
 	
 	this.setCharacterAnimations = function(tileWidth, tileHeight) {
 		var chars = this.charManager.getCharacters();
 		for(var char in chars) {
 			var currentState = chars[char].getState();
-			if (this.charSprites[char].currentAnimation != currentState) {
-				this.charSprites[char].gotoAndPlay(currentState);
+			var currentSprite = this.charSprites[char];
+			if (currentSprite.currentAnimation != currentState) {
+				currentSprite.gotoAndPlay(currentState);
 			}
 			switch(currentState) {
 				case 'walk':
-					var currentPos = this.charManager.getCharacterPosition(char);
-					this.charSprites[char].x = currentPos.X * tileWidth;
-					this.charSprites[char].y = currentPos.Y * tileHeight;
-					this.charSprites[char].framerate = 6;
+					characterWalk(currentSprite, this.charManager.getCharacterPosition(char))
 					break;
 				case 'idle':
-					this.charSprites[char].framerate = 2;
+					currentSprite.framerate = 2;
 					break;
 			}
 		}
