@@ -11,9 +11,9 @@ Game = function() {
 		//self.gfx.render();
 	}
 	
-	var bullshit = function() {
-		self.charManager.createCharacter('cromnow');
-		self.gameLogic.setCharacterDestination('cromnow', 7, 1);
+	this.bullshit = function() {
+		this.charManager.createCharacter('cromnow');
+		this.gameLogic.setCharacterDestination('cromnow', 7, 1);
 	}
 	
 	this.setUp = function() {
@@ -21,8 +21,7 @@ Game = function() {
 		this.level = new LevelHandler(new OfficeMap());
 		this.gameLogic = new GameLogic(this.charManager, this.level);
 		this.gfx = new Gfx();	
-		bullshit();
-		
+		this.bullshit();
 	}
 	
 	this.render = function() {

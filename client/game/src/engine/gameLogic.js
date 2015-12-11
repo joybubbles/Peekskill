@@ -4,6 +4,7 @@ GameLogic = function(characterManager, level) {
 	this.pathAlg.setGrid(level.getLayout());
 	this.pathAlg.setAcceptableTiles([0]);
 	this.charManager = characterManager;
+	this.inputManager = new InputManager();
 	this.level = level;
 	
 	var delta = 0;
@@ -20,7 +21,28 @@ GameLogic = function(characterManager, level) {
 	
 	this.update = function() {
 		this.setDelta();
+		this.handleInputs();
 		this.charManager.update(delta);
+	}
+	
+	this.addInputSource = function(source) {
+		this.inputManager.addSource(source);
+	}
+	
+	
+	
+	
+	/*
+	 TODO: move to own handler
+	*/
+	this.handleInputs = function() {
+		var inputs = this.inputManager.getNewInputs();
+		for(var input in inputs) {
+			switch (input.type) {
+				case 'walk':
+					this.setCharacterDestination(input.charName, input.x, input.y);
+			}
+		}
 	}
 	
 	this.setCharacterDestination = function(charName, X, Y) {
