@@ -14,6 +14,9 @@ Game = function() {
 	this.bullshit = function() {
 		this.charManager.createCharacter('cromnow');
 		this.gameLogic.setCharacterDestination('cromnow', 7, 1);
+		this.gameLogic.addInputSource(
+			new PlayerInput('cromnow', document.getElementById("canvas"))
+		)
 	}
 	
 	this.setUp = function() {

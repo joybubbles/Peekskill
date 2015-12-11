@@ -38,9 +38,10 @@ GameLogic = function(characterManager, level) {
 	this.handleInputs = function() {
 		var inputs = this.inputManager.getNewInputs();
 		for(var input in inputs) {
-			switch (input.type) {
+			var i = inputs[input];
+			switch (i.type) {
 				case 'walk':
-					this.setCharacterDestination(input.charName, input.x, input.y);
+					this.setCharacterDestination(i.name, i.x, i.y);
 			}
 		}
 	}
