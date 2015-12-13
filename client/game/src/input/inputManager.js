@@ -3,7 +3,6 @@ InputManager = function() {
 	var newInputs = [];
 	
 	inputCallback = function(input) {
-		console.log('handler ran!');
 		newInputs.push(input);
 	}
 	

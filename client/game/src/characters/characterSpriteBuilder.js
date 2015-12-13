@@ -2,6 +2,8 @@ CharacterSpriteBuilder = function() {
 	this.build = function(name) {
 		var data = {
 			images: ["/characters/"+name+"/sprites.png"],
+			regX: 52.5,
+			regY: 100,
 			frames: {width:105, height:195},
 			framerate: 6,
 			animations: {

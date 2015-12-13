@@ -1,10 +1,10 @@
 Character = function(name) {
 	this.name = name;
 	this.speed = 0.7;
-	this.Xpos = 1;
-	this.Ypos = 1;
-	this.Xtarget = 0;
-	this.Ytarget = 0;
+	this.Xpos = 2;
+	this.Ypos = 2;
+	this.Xtarget = 2;
+	this.Ytarget = 2;
 	
 	this.path = [];
 	
@@ -48,6 +48,9 @@ Character = function(name) {
 		if (changeDirection) {
 			this.Xpos = this.Xtarget;
 			this.Ypos = this.Ytarget;
+			
+			console.log('char X: '+this.Xpos);
+			console.log('char Y: '+this.Ypos);
 			
 			if (this.path.length) {
 				var newPos = this.path.shift();

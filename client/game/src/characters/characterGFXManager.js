@@ -13,7 +13,7 @@ CharacterGFXManager = function (characterManager) {
 	
 	var characterWalk = function(characterSprite, currentPos ,tileWidth, tileHeight) {
 		characterSprite.x = currentPos.X * tileWidth;
-		characterSprite.y = currentPos.Y * tileHeight;
+		characterSprite.y = currentPos.Y * tileHeight - tileHeight;
 		characterSprite.framerate = 6;
 	}
 	
