@@ -1,8 +1,8 @@
 Character = function(name) {
 	this.name = name;
-	this.speed = 0.7;
-	this.Xpos = 1;
-	this.Ypos = 1;
+	this.speed = 2.5;
+	this.Xpos = 0;
+	this.Ypos = 0;
 	this.Xtarget = 0;
 	this.Ytarget = 0;
 	

@@ -29,9 +29,6 @@ GameLogic = function(characterManager, level) {
 		this.inputManager.addSource(source);
 	}
 	
-	
-	
-	
 	/*
 	 TODO: move to own handler
 	*/
