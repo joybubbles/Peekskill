@@ -1,6 +1,6 @@
 Character = function(name) {
 	this.name = name;
-	this.speed = 2.5;
+	this.speed = 4.5;
 	this.Xpos = 0;
 	this.Ypos = 0;
 	this.Xtarget = 0;
@@ -22,6 +22,18 @@ Character = function(name) {
 		} else {
 			return 'walk';
 		}
+	}
+
+	this.correctFacing = function() {
+        if (this.getState() == 'walk') {
+            if (this.path[this.path.length-1].x < this.Xpos) {
+				return 'left';
+            } else if (this.path[this.path.length-1].x > this.Xpos) {
+				return 'right';
+            }
+        }
+
+		return false;
 	}
 	
 	this.update = function(delta) {
