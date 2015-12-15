@@ -3,8 +3,8 @@ Character = function(name) {
 	this.speed = 0.7;
 	this.Xpos = 2;
 	this.Ypos = 2;
-	this.Xtarget = 2;
-	this.Ytarget = 2;
+	this.Xtarget = 1;
+	this.Ytarget = 1;
 	
 	this.path = [];
 	

@@ -5,17 +5,17 @@ PlayerInput = function(name, canvas) {
 	var characterName = name;
 	var handler = function(input) {};
 	
-	var handleClick = function(event) {
-		console.log('X: '+Math.floor(event.x / tileWidth));
-		console.log('Y: '+Math.floor(event.y / tileHeight));
+	this.handleClick = function(event) {
+		console.log(event);
+		console.log('X: '+Math.floor(event.rawX / tileWidth));
+		console.log('Y: '+Math.floor(event.rawY / tileHeight));
 		handler({
 			name: characterName,
-			x: Math.floor(event.x / tileWidth),
-			y: Math.floor(event.y / tileHeight),
+			x: Math.floor(event.rawX / tileWidth),
+			y: Math.floor(event.rawY / tileHeight),
 			type: 'walk'
 		});
 	};
-	canvas.addEventListener('click', handleClick);
 	
 	this.setHandler = function(callback) {
 		handler = callback;

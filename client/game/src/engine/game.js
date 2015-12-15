@@ -5,6 +5,7 @@ Game = function() {
 	this.level = null;
 	this.gameLogic = null;
 	this.gfx = null;
+	this.playerImput = null;
 	
 	var GameLoop = function() {
 		self.gameLogic.update();
@@ -14,7 +15,7 @@ Game = function() {
 	this.bullshit = function() {
 		this.charManager.createCharacter('cromnow');
 		this.gameLogic.addInputSource(
-			new PlayerInput('cromnow', document.getElementById("canvas"))
+			GlobalInput = new PlayerInput('cromnow', document.getElementById("canvas"))
 		)
 	}
 	

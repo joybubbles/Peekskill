@@ -56,7 +56,9 @@ GameLogic = function(characterManager, level) {
 		var self = this;
 		var name = characterName;
 		this.pathAlg.findPath(startX, startY, endX, endY, function(path) {
-			self.charManager.setCharacterPath(name, path);	
+			if (path && path.length) {
+				self.charManager.setCharacterPath(name, path);
+			}
 		});
 	}	
 }

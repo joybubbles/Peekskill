@@ -1,4 +1,5 @@
-Gfx = function() {
+Gfx = function(playerInput) {
+	var pInput = playerInput;
 	var tileWidth = 100;
 	var tileHeight = 100;
 	var stage = null;
@@ -47,12 +48,18 @@ Gfx = function() {
 	        	images: [img],
 	        	frames: { width: 100, height: 100 },
 	   		});
-			for(var x = 0; x < xLength; x++) {
+			for(var x = 0; x < xLength + 1; x++) {
 				for (var y = 0; y < yHeight; y++) {
 					var sprite = new createjs.Sprite(mapSpriteSheet);
 	        		sprite.x = x * tileWidth;
 	        		sprite.y = y * tileHeight;
+					sprite.width = 100;
+					sprite.height = 100;
 	        		sprite.gotoAndStop(layout[x][y]);
+					sprite.addEventListener("click", function(event) {
+						GlobalInput.handleClick(event);
+					});
+				
 					container.addChild(sprite);
 				}
 			}
