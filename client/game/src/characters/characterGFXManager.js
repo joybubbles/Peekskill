@@ -25,9 +25,21 @@ CharacterGFXManager = function (characterManager) {
 			if (currentSprite && currentSprite.currentAnimation != currentState) {
 				currentSprite.gotoAndPlay(currentState);
 			}
+
+			var correctFacing = chars[char].correctFacing();
+
+			switch(correctFacing) {
+				case 'left':
+					currentSprite.scaleX = -1;
+					break;
+				case 'right':
+					currentSprite.scaleX = 1;
+					break;
+			}
+
 			switch(currentState) {
 				case 'walk':
-					characterWalk(currentSprite, this.charManager.getCharacterPosition(char), tileWidth, tileHeight)
+					characterWalk(currentSprite, this.charManager.getCharacterPosition(char), tileWidth, tileHeight);
 					break;
 				case 'idle':
 					currentSprite.framerate = 2;
