@@ -26,9 +26,9 @@ Character = function(name) {
 
 	this.correctFacing = function() {
         if (this.getState() == 'walk') {
-            if (this.path[this.path.length-1].x < this.Xpos) {
+            if (this.Xtarget < this.Xpos) {
 				return 'left';
-            } else if (this.path[this.path.length-1].x > this.Xpos) {
+            } else if (this.Xtarget > this.Xpos) {
 				return 'right';
             }
         }
