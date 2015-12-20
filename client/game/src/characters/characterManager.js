@@ -8,9 +8,13 @@ CharacterManager = function() {
 	this.setCharacterPath = function(name, path) {
 		characters[name].setPath(path);
 	}
+
+	this.getCharacter = function(name) {
+		return characters[name];
+	}
 	
 	this.getCharacterPosition = function(name) {
-		return characters[name].getPossition();
+		return characters[name].getPosition();
 	}
 	
 	this.characterIsInPossition = function(X, Y) {

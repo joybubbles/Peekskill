@@ -9,6 +9,7 @@ Gfx = function() {
 	this.charGfxManager = null;
     this.gameLogic = null;
     this.mainContainer = null;
+    this.camera = null;
     var _this = this;
 
 
@@ -34,7 +35,14 @@ Gfx = function() {
 
         stage.addEventListener('click', this.handleClick);
         document.onkeydown = this.handleKeyDown;
-	}
+
+        this.camera = new Camera(this.mainContainer, tileWidth);
+        this.camera.followCharacter(characterManager.getCharacter('cromnow'));
+	};
+
+    this.updateCamera = function () {
+        this.camera.update();
+    };
 
     this.handleKeyDown = function(event) {
         var keyCode = event.keyCode;
@@ -44,26 +52,25 @@ Gfx = function() {
 
         /* W */
         if (keyCode==87) {
-            _this.mainContainer.y -= speed;
+            _this.camera.move(0, -10);
+           //  _this.mainContainer.y -= speed;
         }
 
         /* S */
         if (keyCode==83) {
-            _this.mainContainer.y += speed;
+           // _this.mainContainer.y += speed;
         }
 
         /* A */
         if (keyCode==65) {
-            _this.mainContainer.x -= speed;
+           // _this.mainContainer.x -= speed;
         }
 
         /* D */
         if (keyCode==68) {
-            _this.mainContainer.x += speed;
+          //  _this.mainContainer.x += speed;
         }
     };
-
-
 
     this.handleClick = function(event) {
         console.log(_this.mainContainer.x);
@@ -80,4 +87,4 @@ Gfx = function() {
 			}
 		}
 	}
-}
+};

@@ -69,7 +69,7 @@ Character = function(name) {
 		}
 	}
 	
-	this.getPossition = function() {
+	this.getPosition = function() {
 		return {X: this.Xpos, Y: this.Ypos};
 	}
 }
