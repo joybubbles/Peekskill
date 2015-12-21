@@ -7,7 +7,7 @@ CharacterGFXManager = function (characterManager) {
 		var chars = this.charManager.getCharacters();
 		for(var char in chars) {
 			this.charSprites[char] = spriteBuilder.build(char);
-        	stage.addChild(this.charSprites[char]);
+			stage.addChild(this.charSprites[char]);
 		}
 	}
 	
@@ -27,13 +27,15 @@ CharacterGFXManager = function (characterManager) {
 			}
 
 			var correctFacing = chars[char].correctFacing();
-
 			switch(correctFacing) {
 				case 'left':
 					currentSprite.scaleX = -1;
+					var spriteBounds = currentSprite.getBounds();
+					currentSprite.regX = spriteBounds.width;
 					break;
 				case 'right':
 					currentSprite.scaleX = 1;
+					currentSprite.regX = 0;
 					break;
 			}
 

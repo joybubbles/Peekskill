@@ -19,8 +19,8 @@ Game = function() {
 	this.setUp = function() {
 		this.charManager = new CharacterManager();
 		this.level = new LevelHandler(new OfficeMap());
-		this.gameLogic = new GameLogic(this.charManager, this.level);
 		this.gfx = new Gfx();
+		this.gameLogic = new GameLogic(this.charManager, this.level, this.gfx);
 		this.bullshit();
 	}
 	

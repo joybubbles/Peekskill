@@ -1,4 +1,4 @@
-GameLogic = function(characterManager, level) {
+GameLogic = function(characterManager, level, gfx) {
 
 	this.pathAlg = new EasyStarjs();
 	this.pathAlg.setGrid(level.getLayout());
@@ -6,6 +6,7 @@ GameLogic = function(characterManager, level) {
 	this.charManager = characterManager;
 	this.inputManager = new InputManager();
 	this.level = level;
+    this.gfx = gfx;
 	
 	var delta = 0;
 	this.then = null;
@@ -17,17 +18,18 @@ GameLogic = function(characterManager, level) {
 		}
     	delta = (now - this.then) / 1000; // seconds since last frame
     	this.then = now;
-  	}
+  	};
 	
 	this.update = function() {
 		this.setDelta();
 		this.handleInputs();
+		this.gfx.updateCamera();
 		this.charManager.update(delta);
-	}
-	
+	};
+
 	this.addInputSource = function(source) {
 		this.inputManager.addSource(source);
-	}
+	};
 	
 	/*
 	 TODO: move to own handler
@@ -40,13 +42,13 @@ GameLogic = function(characterManager, level) {
 					this.setCharacterDestination(input.charName, input.x, input.y);
 			}
 		}
-	}
+	};
 	
 	this.setCharacterDestination = function(charName, X, Y) {
 		var currentPos = this.charManager.getCharacterPosition(charName);
 		this.findCharacterPath(currentPos.X, currentPos.Y, X, Y, charName);
 		this.pathAlg.calculate();
-	}
+	};
 	
 	this.findCharacterPath = function(startX, startY, endX, endY, characterName) {
 		var self = this;
@@ -55,4 +57,4 @@ GameLogic = function(characterManager, level) {
 			self.charManager.setCharacterPath(name, path);	
 		});
 	}	
-}
+};
