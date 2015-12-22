@@ -2,13 +2,13 @@ InputManager = function() {
 	var sources = [];
 	var newInputs = [];
 	
-	inputCallback = function(input) {
-		newInputs.push(input);
-	}
-	
-	this.addSource = function(newSource) {
-		newSource.setHandler(inputCallback)
-		sources.push(newSource);
+	this.addNewCharacterDestination = function(charName, X, Y) {
+		newInputs.push({
+			charName: charName,
+			type: 'walk',
+			x: X,
+			y: Y
+		});
 	}
 	
 	this.getNewInputs = function() {

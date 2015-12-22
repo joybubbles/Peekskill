@@ -1,8 +1,16 @@
 CharacterManager = function() {
 	var characters = [];
 	
-	this.createCharacter = function(name) {
-		characters[name] = new Character(name);
+	this.buildFromDataSet = function(dataSet) {
+		var self = this;
+		dataSet.forEach(function(character) {
+			self.createCharacter(character);
+		});
+	}
+	
+	this.createCharacter = function(charData) {
+		console.log(charData);
+		characters[charData.name] = new Character(charData);
 	}
 	
 	this.setCharacterPath = function(name, path) {

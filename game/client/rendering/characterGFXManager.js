@@ -6,8 +6,10 @@ CharacterGFXManager = function (characterManager) {
 	this.loadCharacterAnimations = function(stage) {
 		var chars = this.charManager.getCharacters();
 		for(var char in chars) {
-			this.charSprites[char] = spriteBuilder.build(char);
-			stage.addChild(this.charSprites[char]);
+			if (typeof this.charSprites[char] === 'undefined') {
+				this.charSprites[char] = spriteBuilder.build(char);
+				stage.addChild(this.charSprites[char]);	
+			}
 		}
 	}
 	
@@ -22,6 +24,7 @@ CharacterGFXManager = function (characterManager) {
 		for(var char in chars) {
 			var currentState = chars[char].getState();
 			var currentSprite = this.charSprites[char];
+			
 			if (currentSprite && currentSprite.currentAnimation != currentState) {
 				currentSprite.gotoAndPlay(currentState);
 			}

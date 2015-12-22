@@ -1,12 +1,12 @@
-Character = function(name) {
-	this.name = name;
-	this.speed = 4.5;
-	this.Xpos = 0;
-	this.Ypos = 0;
-	this.Xtarget = 0;
-	this.Ytarget = 0;
-	
-	this.path = [];
+Character = function(data) {
+	this._id = data._id;
+	this.name = data.name;
+	this.speed = data.speed;
+	this.Xpos = data.Xpos;
+	this.Ypos = data.Ypos;
+	this.Xtarget = data.Xtarget;
+	this.Ytarget = data.Ytarget;
+	this.path = data.path;
 	
 	this.setPath = function(path) {
 		this.path = path;
@@ -71,5 +71,17 @@ Character = function(name) {
 	
 	this.getPosition = function() {
 		return {X: this.Xpos, Y: this.Ypos};
+	}
+	
+	this.getMongoDTO = function() {
+		return 	{
+			name: this.name,
+			speed: this.speed,
+			Xpos: this.Xpos,
+			Ypox: this.Ypos,
+			Xtarget: this.Xtarget,
+			Ytarget: this.Ytarget,
+			path: this.path
+		};
 	}
 }

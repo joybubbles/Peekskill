@@ -1,4 +1,4 @@
-Gfx = function() {
+Gfx = function(movementCallback) {
 	var tileWidth = 40;
 	var tileHeight = 40;
 	var stage, christian = null;
@@ -7,16 +7,14 @@ Gfx = function() {
 	this.mapLayout = [];
 	this.charManager = null;
 	this.charGfxManager = null;
-    this.gameLogic = null;
     this.mainContainer = null;
     this.camera = null;
     var _this = this;
 
 
-	this.setup = function(level, characterManager, gameLogic) {
+	this.setup = function(level, characterManager) {
 		this.mapLayout = level.getLayout();
 		this.charManager = characterManager;
-        this.gameLogic = gameLogic;
 
 		var background = new createjs.Bitmap("map.png");
 		stage = new createjs.Stage("canvas");
@@ -36,17 +34,20 @@ Gfx = function() {
         stage.addEventListener('click', this.handleClick);
         document.onkeydown = this.handleKeyDown;
 
-        this.camera = new Camera(this.mainContainer, tileWidth);
-        this.camera.followCharacter(characterManager.getCharacter('cromnow'));
+        //this.camera = new Camera(this.mainContainer, tileWidth);
+        //this.camera.followCharacter(characterManager.getCharacter('cromnow'));
 	};
-
+    
     this.updateCamera = function () {
-        this.camera.update();
+        //this.camera.update();
+    };
+    
+    this.updateCharacterSprites = function () {
+        this.charGfxManager.loadCharacterAnimations(this.mainContainer);
     };
 
     this.handleKeyDown = function(event) {
         var keyCode = event.keyCode;
-        console.log(keyCode);
 
         var speed = 20;
 
@@ -73,11 +74,11 @@ Gfx = function() {
     };
 
     this.handleClick = function(event) {
-        console.log(_this.mainContainer.x);
         var tileX = parseInt((event.stageX - 52 - _this.mainContainer.x) / tileWidth);
         var tileY = parseInt((event.stageY - 160 - _this.mainContainer.y) / tileHeight);
-        console.log(tileX + ' ' + tileY);
-        _this.gameLogic.setCharacterDestination('cromnow', tileX, tileY);
+        movementCallback(tileX, tileY);
+        //send to server.
+        //_this.gameLogic.setCharacterDestination('cromnow', tileX, tileY);
     };
 	
 	var setupBackground = function (layout) {

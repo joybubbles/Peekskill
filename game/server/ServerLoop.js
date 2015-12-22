@@ -1,4 +1,4 @@
-GameLogic = function(characterManager, level, gfx) {
+ServerGameLogic = function(characterManager, level) {
 
 	this.pathAlg = new EasyStarjs();
 	this.pathAlg.setGrid(level.getLayout());
@@ -6,7 +6,6 @@ GameLogic = function(characterManager, level, gfx) {
 	this.charManager = characterManager;
 	this.inputManager = new InputManager();
 	this.level = level;
-    this.gfx = gfx;
 	
 	var delta = 0;
 	this.then = null;
@@ -23,20 +22,13 @@ GameLogic = function(characterManager, level, gfx) {
 	this.update = function() {
 		this.setDelta();
 		this.handleInputs();
-		this.gfx.updateCamera();
 		this.charManager.update(delta);
 	};
-
-	this.addInputSource = function(source) {
-		this.inputManager.addSource(source);
-	};
 	
-	/*
-	 TODO: move to own handler
-	*/
 	this.handleInputs = function() {
 		var inputs = this.inputManager.getNewInputs();
-		for(var input in inputs) {
+		for(var inputKey in inputs) {
+			var input = inputs[inputKey];
 			switch (input.type) {
 				case 'walk':
 					this.setCharacterDestination(input.charName, input.x, input.y);
@@ -50,11 +42,16 @@ GameLogic = function(characterManager, level, gfx) {
 		this.pathAlg.calculate();
 	};
 	
+	this.updateCharacterData = function(name) {
+		Meteor.call('updatePlayer', this.charManager.getCharacters()[name]);
+	};
+	
 	this.findCharacterPath = function(startX, startY, endX, endY, characterName) {
 		var self = this;
 		var name = characterName;
 		this.pathAlg.findPath(startX, startY, endX, endY, function(path) {
-			self.charManager.setCharacterPath(name, path);	
+			self.charManager.setCharacterPath(name, path);
+			self.updateCharacterData(name);
 		});
 	}	
 };
