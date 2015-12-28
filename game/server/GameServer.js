@@ -11,11 +11,15 @@ GameServer = function () {
 		this.gameLogic = new ServerGameLogic(this.charManager, this.level);
 	}
 	
+	this.getCharacters = function() {
+		return this.gameLogic.charManager.getCharacters();
+	}
+	
 	var GameLoop = function() {
 		self.gameLogic.update();
 	}
 	
 	this.run = function() {
-		setInterval(GameLoop, 60 / 1000);
+		setInterval(GameLoop, 1000 / 5);
 	}
 }

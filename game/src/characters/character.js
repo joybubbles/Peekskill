@@ -2,18 +2,32 @@ Character = function(data) {
 	this._id = data._id;
 	this.name = data.name;
 	this.speed = data.speed;
+	
 	this.Xpos = data.Xpos;
 	this.Ypos = data.Ypos;
 	this.Xtarget = data.Xtarget;
 	this.Ytarget = data.Ytarget;
+	this.Xfinal = data.Xfinal;
+	this.Yfinal = data.Yfinal;
+	
 	this.path = data.path;
 	
 	this.setPath = function(path) {
+		if (!path) {
+			this.path = [];
+			return;
+		} else {
+			console.log(path);
+		}
 		this.path = path;
 		var newPos = this.path.shift(); //removes first since its current;
 		newPos = this.path.shift();
 		this.Xtarget = newPos.x;
 		this.Ytarget = newPos.y;
+		
+		//final is used to sync with server. to reduse stuttering.
+		this.Xfinal = this.path[(this.path.length - 1)].x;
+		this.Yfinal = this.path[(this.path.length - 1)].y;
 	}
 	
 	this.getState = function() {
@@ -73,6 +87,15 @@ Character = function(data) {
 		return {X: this.Xpos, Y: this.Ypos};
 	}
 	
+	this.updateFromData = function(data) {
+		this.speed = data.speed;
+		this.Xpos = data.Xpos;
+		this.Ypos = data.Ypos;
+		this.Xtarget = data.Xtarget;
+		this.Ytarget = data.Ytarget;
+		this.path = data.path;
+	}
+	
 	this.getMongoDTO = function() {
 		return 	{
 			name: this.name,
@@ -81,6 +104,8 @@ Character = function(data) {
 			Ypox: this.Ypos,
 			Xtarget: this.Xtarget,
 			Ytarget: this.Ytarget,
+			Xfinal: this.Xfinal,
+			Yfinal: this.Yfinal,
 			path: this.path
 		};
 	}

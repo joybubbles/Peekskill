@@ -51,7 +51,7 @@ ServerGameLogic = function(characterManager, level) {
 		var name = characterName;
 		this.pathAlg.findPath(startX, startY, endX, endY, function(path) {
 			self.charManager.setCharacterPath(name, path);
-			self.updateCharacterData(name);
+			//self.updateCharacterData(name);
 		});
 	}	
 };

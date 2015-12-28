@@ -7,8 +7,22 @@ GameClient = function() {
 	/*temp bullshit*/
 	this.charId = null;
 	
+	var internalBullshit = 0;
 	var GameLoop = function() {
 		self.gameLogic.update();
+		if (internalBullshit > 100) {
+			Meteor.call('getPlayerData', function(error, returnData) {
+				var c = self.characterManager.getCharacter('cromnow');
+				if (c) {
+					if (c.Xfinal !== returnData.Xfinal || c.Yfinal !== returnData.Yfinal) {
+						//if new final destination then sync.
+						self.characterManager.updateCharacter('cromnow', returnData);
+					}
+				}
+			});
+			internalBullshit = 0;
+		}
+		internalBullshit++;
 	}
 	
 	var movementCallback = function(X, Y) {

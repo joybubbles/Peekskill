@@ -9,7 +9,6 @@ CharacterManager = function() {
 	}
 	
 	this.createCharacter = function(charData) {
-		console.log(charData);
 		characters[charData.name] = new Character(charData);
 	}
 	
@@ -23,6 +22,10 @@ CharacterManager = function() {
 	
 	this.getCharacterPosition = function(name) {
 		return characters[name].getPosition();
+	}
+	
+	this.updateCharacter = function(name, data) {
+		characters[name].updateFromData(data);
 	}
 	
 	this.characterIsInPossition = function(X, Y) {
