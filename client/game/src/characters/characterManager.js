@@ -12,7 +12,7 @@ CharacterManager = function() {
 	this.getCharacter = function(name) {
 		return characters[name];
 	}
-	
+
 	this.getCharacterPosition = function(name) {
 		return characters[name].getPosition();
 	}
