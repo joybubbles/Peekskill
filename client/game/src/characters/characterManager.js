@@ -5,8 +5,8 @@ CharacterManager = function() {
 		characters[name] = new Character(name);
 	}
 	
-	this.setCharacterPath = function(name, path) {
-		characters[name].setPath(path);
+	this.setCharacterPath = function(name, path, emit) {
+		characters[name].setPath(path, emit);
 	}
 
 	this.getCharacter = function(name) {

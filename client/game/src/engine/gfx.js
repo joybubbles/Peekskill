@@ -33,15 +33,14 @@ Gfx = function() {
             stage.update(event);
         });
 
+        //this.camera = new Camera(this.mainContainer, tileWidth);
+        //this.camera.followCharacter(characterManager.getCharacter('cromnow'));
         stage.addEventListener('click', this.handleClick);
         document.onkeydown = this.handleKeyDown;
-
-        this.camera = new Camera(this.mainContainer, tileWidth);
-        this.camera.followCharacter(characterManager.getCharacter('cromnow'));
-	};
+    };
 
     this.updateCamera = function () {
-        this.camera.update();
+        // this.camera.update();
     };
 
     this.handleKeyDown = function(event) {
