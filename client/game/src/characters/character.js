@@ -1,5 +1,7 @@
 Character = function(name) {
 	this.name = name;
+	this.emotionalStates = new EmotionalStates();
+	this.emotionalState = this.emotionalStates.getRandom();
 	this.speed = 4.5;
 	this.Xpos = 0;
 	this.Ypos = 0;
@@ -22,6 +24,14 @@ Character = function(name) {
 		} else {
 			return 'walk';
 		}
+	}
+
+	this.getEmotionalState = function() {
+		return this.emotionalState;
+	}
+
+	this.randomizeEmotionalState = function() {
+		this.emotionalState = this.emotionalStates.getRandom();;
 	}
 
 	this.correctFacing = function() {

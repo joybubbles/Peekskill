@@ -26,10 +26,10 @@ Gfx = function() {
 		createjs.Ticker.setFPS(60);
 		setupBackground(this.mapLayout);
 		this.charGfxManager = new CharacterGFXManager(this.charManager);
-		this.charGfxManager.loadCharacterAnimations(this.mainContainer);
+        this.charGfxManager.loadCharacterAnimations(this.mainContainer);
 		
 		createjs.Ticker.addEventListener("tick", function(event) {
-			self.charGfxManager.setCharacterAnimations(tileWidth, tileHeight);
+			self.charGfxManager.setCharacterAnimations(stage, tileWidth, tileHeight);
             stage.update(event);
         });
 
