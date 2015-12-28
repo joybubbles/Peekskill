@@ -14,6 +14,8 @@ GameClient = function() {
 			Meteor.call('getPlayerData', function(error, returnData) {
 				var c = self.characterManager.getCharacter('cromnow');
 				if (c) {
+					console.log('X: '+returnData.Xfinal+' Y: '+returnData.Yfinal);
+					console.log('X: '+c.Xfinal+' Y: '+c.Yfinal);
 					if (c.Xfinal !== returnData.Xfinal || c.Yfinal !== returnData.Yfinal) {
 						//if new final destination then sync.
 						self.characterManager.updateCharacter('cromnow', returnData);

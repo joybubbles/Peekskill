@@ -93,6 +93,8 @@ Character = function(data) {
 		this.Ypos = data.Ypos;
 		this.Xtarget = data.Xtarget;
 		this.Ytarget = data.Ytarget;
+		this.Xfinal = data.Xfinal;
+		this.Yfinal = data.Yfinal;
 		this.path = data.path;
 	}
 	
