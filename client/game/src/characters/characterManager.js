@@ -1,12 +1,12 @@
 CharacterManager = function() {
 	var characters = [];
-	
+
 	this.createCharacter = function(name) {
 		characters[name] = new Character(name);
 	}
 	
-	this.setCharacterPath = function(name, path, emit) {
-		characters[name].setPath(path, emit);
+	this.setCharacterPath = function(name, path) {
+		characters[name].setPath(path);
 	}
 
 	this.getCharacter = function(name) {
@@ -27,7 +27,21 @@ CharacterManager = function() {
 			}
 		}
 	}
-	
+
+	this.setCharacterDestination = function(charName, X, Y) {
+		var currentPos = this.getCharacterPosition(charName);
+		this.findCharacterPath(currentPos.X, currentPos.Y, X, Y, charName);
+		EasyAStar.calculate();
+	};
+
+	this.findCharacterPath = function(startX, startY, endX, endY, characterName) {
+		var self = this;
+		var name = characterName;
+		EasyAStar.findPath(startX, startY, endX, endY, function(path) {
+			self.setCharacterPath(name, path, true);
+		});
+	}
+
 	this.getCharacters = function() {
 		return characters;
 	}

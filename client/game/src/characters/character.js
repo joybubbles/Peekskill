@@ -8,11 +8,7 @@ Character = function(name) {
 	
 	this.path = [];
 
-	this.setPath = function(path, emit) {
-        if (emit) {
-            Meteor.call('updateCharacter', Session.get('currentCharacterId'), { path: path });
-        }
-
+	this.setPath = function(path) {
 		this.path = path;
 		var newPos = this.path.shift(); //removes first since its current;
 		newPos = this.path.shift();

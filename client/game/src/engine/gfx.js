@@ -72,11 +72,15 @@ Gfx = function() {
     };
 
     this.handleClick = function(event) {
-        console.log(_this.mainContainer.x);
         var tileX = parseInt((event.stageX - 52 - _this.mainContainer.x) / tileWidth);
         var tileY = parseInt((event.stageY - 160 - _this.mainContainer.y) / tileHeight);
-        console.log(tileX + ' ' + tileY);
-        _this.gameLogic.setCharacterDestination('cromnow', tileX, tileY);
+
+        var currentCharacterId = Session.get('currentCharacterId');
+        if (currentCharacterId != 'default') {
+            CharManager.setCharacterDestination(currentCharacterId, tileX, tileY);
+            var character = CharManager.getCharacter(currentCharacterId);
+            Meteor.call('updateCharacter', currentCharacterId, { x: character.Xpos, y: character.Ypos, targetX: tileX, targetY: tileY});
+        }
     };
 	
 	var setupBackground = function (layout) {

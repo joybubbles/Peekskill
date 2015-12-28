@@ -1,4 +1,5 @@
 CharManager = null;
+EasyAStar = null;
 
 Game = function() {
 	
@@ -20,6 +21,9 @@ Game = function() {
 	this.setUp = function() {
 		CharManager = new CharacterManager();
 		this.level = new LevelHandler(new OfficeMap());
+		var pathFindingAlgorithms = new PathFindingAlgorithms(this.level);
+		EasyAStar = pathFindingAlgorithms.getEasyAstar();
+
 		this.gfx = new Gfx();
 		this.gameLogic = new GameLogic(CharManager, this.level, this.gfx);
 		this.bullshit();

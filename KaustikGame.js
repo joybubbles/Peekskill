@@ -11,7 +11,8 @@ if (Meteor.isClient) {
 		var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
 
 		characters.forEach(function (characterData) {
-			CharManager.setCharacterPath(characterData.characterId, characterData.path, false);
+			console.log('Updating ' + characterData.characterId);
+			updateCharacterDestination(characterData);
 		});
 	});
 
@@ -19,6 +20,22 @@ if (Meteor.isClient) {
 	var g = new Game();
 	g.setUp();
 	g.run();
+	updateClient();
 	g.render();
+	});
+}
+
+function updateCharacterDestination(characterData) {
+	var char = CharManager.getCharacter(characterData.characterId);
+	char.Xpos = characterData.x;
+	char.Ypos = characterData.y;
+	CharManager.setCharacterDestination(characterData.characterId, characterData.targetX, characterData.targetY);
+}
+
+function updateClient() {
+	var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
+
+	characters.forEach(function (characterData) {
+		updateCharacterDestination(characterData);
 	});
 }
