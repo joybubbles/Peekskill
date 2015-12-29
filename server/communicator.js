@@ -24,6 +24,14 @@ Communicator = function() {
         }, {
             upsert: true
         });
+
+        Characters.update({
+            characterId: 'cromnow'
+        }, {
+            $set: { emotionalState :  EmotionalStates.getRandom()}
+        }, {
+            upsert: true
+        });
     }
 
     Meteor.setInterval(randomizeEmotionalState, 3000);

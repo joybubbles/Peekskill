@@ -4,6 +4,8 @@ Communicator = function(charGFXManager) {
     var self = this;
     Meteor.subscribe('characters');
 
+    this.lastTarget = [];
+
     Tracker.autorun(function () {
         var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
 
@@ -18,11 +20,18 @@ Communicator = function(charGFXManager) {
     this.updateCharacterDestination = function(characterData) {
         var char = CharManager.getCharacter(characterData.characterId);
 
-        console.log(characterData.characterId + ' - ' + char.Xtarget + ' - ' + characterData.targetX)
+        if (characterData.targetX && characterData.targetY) {
 
-        if (characterData.targetX && characterData.targetY && (char.Xtarget != characterData.targetX || char.Ytarget != characterData.targetY)) {
+            if (this.lastTarget[characterData.characterId]) {
+                var oldTarget = this.lastTarget[characterData.characterId];
+                if (oldTarget.x == characterData.targetX && oldTarget.y == characterData.targetY) {
+                    return false;
+                }
+            }
+
             char.Xpos = characterData.x;
             char.Ypos = characterData.y;
+            this.lastTarget[characterData.characterId] = {x:characterData.targetX, y:characterData.targetY};
             CharManager.setCharacterDestination(characterData.characterId, characterData.targetX, characterData.targetY);
         }
     }
