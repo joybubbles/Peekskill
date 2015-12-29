@@ -26,17 +26,17 @@ Game = function() {
         var pathFindingAlgorithms = new PathFindingAlgorithms(this.level);
         EasyAStar = pathFindingAlgorithms.getEasyAstar();
 		this.bullshit();
-		this.setupCommunicator();
 		this.gfx = new Gfx();
 		this.gameLogic = new GameLogic(CharManager, this.level, this.gfx);
 	}
 
-	this.setupCommunicator = function() {
-		this.communicator = new Communicator();
+	this.setupCommunicator = function(charGFXManager) {
+		this.communicator = new Communicator(charGFXManager);
 	}
 
 	this.render = function() {
-		this.gfx.setup(this.level, CharManager, this.gameLogic);
+		this.gfx.setup(this.level, this.gameLogic);
+		this.setupCommunicator(this.gfx.getCharGFXManager());
 	}
 	
 	this.run = function() {

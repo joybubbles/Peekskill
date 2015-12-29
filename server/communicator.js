@@ -16,20 +16,17 @@ Communicator = function() {
         return Characters.find();
     });
 
-    /*
     function randomizeEmotionalState() {
-        var charIds = CharManager.getCharacters();
-        for(var charId in charIds) {
-            Characters.update({
-                characterId: charId
-            }, {
-                $set: { emotionalState :  CharacterManager.getCharacter(charId).getEmotionalState()}
-            }, {
-                upsert: true
-            });
-        }
+        Characters.update({
+            characterId: 'hannes'
+        }, {
+            $set: { emotionalState :  EmotionalStates.getRandom()}
+        }, {
+            upsert: true
+        });
     }
-    */
+
+    Meteor.setInterval(randomizeEmotionalState, 3000);
 };
 
 communicator = new Communicator();

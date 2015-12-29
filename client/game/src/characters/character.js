@@ -1,7 +1,6 @@
 Character = function(name) {
 	this.name = name;
-	this.emotionalStates = new EmotionalStates();
-	this.emotionalState = this.emotionalStates.getRandom();
+	this.emotionalState = 'neutral';
 	this.speed = 4.5;
 	this.Xpos = 0;
 	this.Ypos = 0;
@@ -11,11 +10,17 @@ Character = function(name) {
 	this.path = [];
 
 	this.setPath = function(path) {
-		this.path = path;
-		var newPos = this.path.shift(); //removes first since its current;
-		newPos = this.path.shift();
-		this.Xtarget = newPos.x;
-		this.Ytarget = newPos.y;
+		if (path) {
+			this.path = path;
+			var newPos = this.path.shift(); //removes first since its current;
+			newPos = this.path.shift();
+			this.Xtarget = newPos.x;
+			this.Ytarget = newPos.y;
+		}
+	}
+
+	this.setEmotionalState = function(state) {
+		this.emotionalState = state;
 	}
 	
 	this.getState = function() {
@@ -29,11 +34,7 @@ Character = function(name) {
 	this.getEmotionalState = function() {
 		return this.emotionalState;
 	}
-
-	this.randomizeEmotionalState = function() {
-		this.emotionalState = this.emotionalStates.getRandom();;
-	}
-
+	
 	this.correctFacing = function() {
         if (this.getState() == 'walk') {
             if (this.Xtarget < this.Xpos) {
@@ -71,7 +72,7 @@ Character = function(name) {
 			this.Xpos = this.Xtarget;
 			this.Ypos = this.Ytarget;
 			
-			if (this.path.length) {
+			if (this.path && this.path.length) {
 				var newPos = this.path.shift();
 				this.Xtarget = newPos.x;
 				this.Ytarget = newPos.y;

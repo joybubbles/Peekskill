@@ -1,29 +1,48 @@
-Communicator = function() {
+Communicator = function(charGFXManager) {
+    /* Store time of last update? */
+    this.charGFXManager = charGFXManager;
+    var self = this;
     Meteor.subscribe('characters');
 
     Tracker.autorun(function () {
         var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
 
         characters.forEach(function (characterData) {
-            console.log('Updating ' + characterData.characterId);
-            updateCharacterDestination(characterData);
+            if (characterData.characterId) {
+                self.updateCharacterDestination(characterData);
+                self.updateClientEmotionalState(characterData);
+            }
         });
     });
 
-    function updateCharacterDestination(characterData) {
+    this.updateCharacterDestination = function(characterData) {
         var char = CharManager.getCharacter(characterData.characterId);
-        char.Xpos = characterData.x;
-        char.Ypos = characterData.y;
-        CharManager.setCharacterDestination(characterData.characterId, characterData.targetX, characterData.targetY);
+
+        console.log(characterData.characterId + ' - ' + char.Xtarget + ' - ' + characterData.targetX)
+
+        if (characterData.targetX && characterData.targetY && (char.Xtarget != characterData.targetX || char.Ytarget != characterData.targetY)) {
+            char.Xpos = characterData.x;
+            char.Ypos = characterData.y;
+            CharManager.setCharacterDestination(characterData.characterId, characterData.targetX, characterData.targetY);
+        }
     }
 
-    function updateClient() {
-        var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
+    this.updateClient = function() {
+        var characters = Characters.find();
 
         characters.forEach(function (characterData) {
-            updateCharacterDestination(characterData);
+            self.updateCharacterDestination(characterData);
+            self.updateClientEmotionalState(characterData);
         });
     }
 
-    updateClient();
+    this.updateClientEmotionalState = function(characterData) {
+        if (characterData.emotionalState) {
+            var char = CharManager.getCharacter(characterData.characterId);
+            char.setEmotionalState(characterData.emotionalState);
+            this.charGFXManager.changeEmotionalState(characterData.characterId);
+        }
+    }
+
+    this.updateClient();
 };

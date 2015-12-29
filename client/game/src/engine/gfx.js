@@ -10,12 +10,13 @@ Gfx = function() {
     this.gameLogic = null;
     this.mainContainer = null;
     this.camera = null;
-    var _this = this;
 
-
-	this.setup = function(level, characterManager, gameLogic) {
+    this.getCharGFXManager = function() {
+        return this.charGfxManager;
+    }
+    
+	this.setup = function(level, gameLogic) {
 		this.mapLayout = level.getLayout();
-		this.charManager = characterManager;
         this.gameLogic = gameLogic;
 
 		var background = new createjs.Bitmap("map.png");
@@ -25,9 +26,9 @@ Gfx = function() {
 		this.mainContainer.addChild(background);
 		createjs.Ticker.setFPS(60);
 		setupBackground(this.mapLayout);
-		this.charGfxManager = new CharacterGFXManager(this.charManager);
+		this.charGfxManager = new CharacterGFXManager(this.mainContainer);
         this.charGfxManager.loadCharacterAnimations(this.mainContainer);
-		
+
 		createjs.Ticker.addEventListener("tick", function(event) {
 			self.charGfxManager.setCharacterAnimations(stage, tileWidth, tileHeight);
             stage.update(event);
@@ -51,29 +52,29 @@ Gfx = function() {
 
         /* W */
         if (keyCode==87) {
-            _this.camera.move(0, -10);
-           //  _this.mainContainer.y -= speed;
+            self.camera.move(0, -10);
+           //  self.mainContainer.y -= speed;
         }
 
         /* S */
         if (keyCode==83) {
-           // _this.mainContainer.y += speed;
+           // self.mainContainer.y += speed;
         }
 
         /* A */
         if (keyCode==65) {
-           // _this.mainContainer.x -= speed;
+           // self.mainContainer.x -= speed;
         }
 
         /* D */
         if (keyCode==68) {
-          //  _this.mainContainer.x += speed;
+          //  self.mainContainer.x += speed;
         }
     };
 
     this.handleClick = function(event) {
-        var tileX = parseInt((event.stageX - 52 - _this.mainContainer.x) / tileWidth);
-        var tileY = parseInt((event.stageY - 160 - _this.mainContainer.y) / tileHeight);
+        var tileX = parseInt((event.stageX - 52 - self.mainContainer.x) / tileWidth);
+        var tileY = parseInt((event.stageY - 160 - self.mainContainer.y) / tileHeight);
 
         var currentCharacterId = Session.get('currentCharacterId');
         if (currentCharacterId != 'default') {
