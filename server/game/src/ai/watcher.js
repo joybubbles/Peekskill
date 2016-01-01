@@ -5,7 +5,7 @@ Watcher = function() {
 
     this.watch = function() {
         if (self.playerInteraction.hasPlayersNearby()) {
-            console.log('So we meet again...');
+            ServerCommunicator.changeEmotionalState('mlg');
         }
     };
 

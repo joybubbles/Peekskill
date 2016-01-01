@@ -29,23 +29,18 @@ Communicator = function() {
         return Characters.find();
     });
 
-    function randomizeEmotionalState() {
-        Characters.update({
-            characterId: 'hannes'
-        }, {
-            $set: { emotionalState :  EmotionalStates.getRandom()}
-        }, {
-            upsert: true
-        });
-
-        Characters.update({
-            characterId: 'cromnow'
-        }, {
-            $set: { emotionalState :  EmotionalStates.getRandom()}
-        }, {
-            upsert: true
-        });
+    this.changeEmotionalState = function(state) {
+        var chars = CharManager.getCharacters();
+        for(var char in chars) {
+            Characters.update({
+                characterId: char
+            }, {
+                $set: {emotionalState: state}
+            }, {
+                upsert: true
+            });
+        }
     }
 };
 
-communicator = new Communicator();
+ServerCommunicator = new Communicator();

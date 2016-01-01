@@ -7,7 +7,7 @@ Communicator = function(charGFXManager) {
     this.lastTarget = [];
 
     Tracker.autorun(function () {
-        var characters = Characters.find({ characterId: {$ne:Session.get('currentCharacterId')}});
+        var characters = Characters.find();
 
         characters.forEach(function (characterData) {
             if (characterData.characterId) {
@@ -18,6 +18,10 @@ Communicator = function(charGFXManager) {
     });
 
     this.updateCharacterDestination = function(characterData) {
+        if (Session.get('currentCharacterId')==characterData.characterId) {
+            return false;
+        }
+
         var char = CharManager.getCharacter(characterData.characterId);
 
         if (characterData.targetX && characterData.targetY) {
