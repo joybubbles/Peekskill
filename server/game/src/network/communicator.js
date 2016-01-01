@@ -18,16 +18,20 @@ Communicator = function() {
         return Characters.find();
     });
 
+    this.changeEmotionalStateForCharacter = function(characterId, state) {
+        Characters.update({
+            characterId: characterId
+        }, {
+            $set: {emotionalState: state}
+        }, {
+            upsert: true
+        });
+    };
+
     this.changeEmotionalStateForAllCharacters = function(state) {
-        var chars = CharManager.getCharacters();
-        for(var char in chars) {
-            Characters.update({
-                characterId: char
-            }, {
-                $set: {emotionalState: state}
-            }, {
-                upsert: true
-            });
+        var characters = CharManager.getCharacters();
+        for(var characterId in characters) {
+            this.changeEmotionalStateForCharacter(characterId, state);
         }
     }
 };

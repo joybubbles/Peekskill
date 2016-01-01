@@ -3,8 +3,14 @@ Watcher = function() {
     var self = this;
 
     this.watch = function() {
-        if (self.playerInteraction.hasPlayersNearby()) {
-            ServerCommunicator.changeEmotionalStateForAllCharacters('mlg');
+        var charactersCloseToEachOther = self.playerInteraction.getCharactersCloseToEachOther();
+        if (Object.keys(charactersCloseToEachOther).length) {
+            for(var characterId in charactersCloseToEachOther) {
+                for(var otherCharacterKey in charactersCloseToEachOther[characterId]) {
+                    var characterId = charactersCloseToEachOther[characterId][otherCharacterKey];
+                    ServerCommunicator.changeEmotionalStateForCharacter(characterId, 'mlg');
+                }
+            }
         }
     };
 

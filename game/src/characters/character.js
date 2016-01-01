@@ -15,7 +15,7 @@ Character = function(name) {
 			var newPos = this.path.shift();;
 			newPos = this.path.shift();
 
-            if (newPos.x !== undefined && newPos.y !== undefined) {
+            if (newPos !== undefined) {
                 this.Xtarget = newPos.x;
                 this.Ytarget = newPos.y;
             }

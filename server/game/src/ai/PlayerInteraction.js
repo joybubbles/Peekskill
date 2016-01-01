@@ -1,28 +1,27 @@
 PlayerInteraction = function() {
-    this.hasPlayersNearby = function() {
-        var chars = CharManager.getCharacters();
-        for(var char in chars) {
-            var charPosition = CharManager.getCharacterPosition(char);
-            var otherChars = CharManager.getCharacters();
-            for(var otherChar in otherChars) {
-                if (char != otherChar) {
-                    var otherCharPosition = CharManager.getCharacterPosition(otherChar);
-
+    this.getCharactersCloseToEachOther = function() {
+        var characters = CharManager.getCharacters();
+        var charactersCloseToEachOther = {};
+        for(var characterId in characters) {
+            var charPosition = CharManager.getCharacterPosition(characterId);
+            for(var otherCharacterId in characters) {
+                if (characterId != otherCharacterId) {
+                    var otherCharPosition = CharManager.getCharacterPosition(otherCharacterId);
                     if (charPosition.X == otherCharPosition.X && charPosition.Y == otherCharPosition.Y) {
-                        return true;
+                        if (charactersCloseToEachOther[characterId] === undefined) {
+                            charactersCloseToEachOther[characterId] = [];
+                        }
+
+                        charactersCloseToEachOther[characterId].push(otherCharacterId);
                     }
                 }
             }
         }
 
-        return false;
-    }
-
-    this.getPlayersNearby = function() {
-
-    }
+        return charactersCloseToEachOther;
+    };
 
     this.speak = function() {
 
     }
-}
+};
