@@ -12,10 +12,13 @@ Character = function(name) {
 	this.setPath = function(path) {
 		if (path) {
 			this.path = path;
-			var newPos = this.path.shift(); //removes first since its current;
+			var newPos = this.path.shift();;
 			newPos = this.path.shift();
-			this.Xtarget = newPos.x;
-			this.Ytarget = newPos.y;
+
+            if (newPos.x !== undefined && newPos.y !== undefined) {
+                this.Xtarget = newPos.x;
+                this.Ytarget = newPos.y;
+            }
 		}
 	}
 
@@ -78,6 +81,11 @@ Character = function(name) {
 				this.Ytarget = newPos.y;
 			}
 		}
+	}
+
+	this.setPosition = function(x, y) {
+		this.Xpos = x;
+		this.Ypos = y;
 	}
 	
 	this.getPosition = function() {
