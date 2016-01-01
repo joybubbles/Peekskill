@@ -5,6 +5,7 @@ if (Meteor.isServer) {
 	var g = new Game();
 	g.setUp();
 	g.run();
+	new Watcher();
 }
 
 if (Meteor.isClient) {
