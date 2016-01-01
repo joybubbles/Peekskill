@@ -2,6 +2,9 @@ Characters = new Meteor.Collection('characters');
 
 if (Meteor.isServer) {
 	Characters.remove({});
+	var g = new Game();
+	g.setUp();
+	g.run();
 }
 
 if (Meteor.isClient) {

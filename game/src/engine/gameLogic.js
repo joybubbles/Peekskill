@@ -1,6 +1,10 @@
 GameLogic = function(characterManager, level, gfx) {
 	this.charManager = characterManager;
-	this.inputManager = new InputManager();
+
+    if (Meteor.isClient) {
+        this.inputManager = new InputManager();
+    }
+
 	this.level = level;
     this.gfx = gfx;
 	
@@ -18,8 +22,12 @@ GameLogic = function(characterManager, level, gfx) {
 	
 	this.update = function() {
 		this.setDelta();
-		this.handleInputs();
-		this.gfx.updateCamera();
+
+        if (Meteor.isClient) {
+            this.handleInputs();
+            this.gfx.updateCamera();
+        }
+
 		this.charManager.update(delta);
 	};
 

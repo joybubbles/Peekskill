@@ -6,12 +6,11 @@ Game = function() {
 	var self = this;
 	this.level = null;
 	this.gameLogic = null;
-	this.gfx = null;
+	this.gfx = false;
 	this.communicator = null;
 	
 	var GameLoop = function() {
 		self.gameLogic.update();
-		//self.gfx.render();
 	}
 	
 	this.bullshit = function() {
@@ -26,7 +25,11 @@ Game = function() {
         var pathFindingAlgorithms = new PathFindingAlgorithms(this.level);
         EasyAStar = pathFindingAlgorithms.getEasyAstar();
 		this.bullshit();
-		this.gfx = new Gfx();
+
+		if (Meteor.isClient) {
+			this.gfx = new Gfx();
+		}
+
 		this.gameLogic = new GameLogic(CharManager, this.level, this.gfx);
 	}
 
