@@ -19,7 +19,7 @@ Communicator = function() {
     });
 
     this.speak = function(characterId, message) {
-        var randomId = Math.random().toString(12) + (new Date()).getTime()
+        var randomId = Math.random().toString(12) + (new Date()).getTime();
         Characters.update({
             characterId: characterId
         }, {

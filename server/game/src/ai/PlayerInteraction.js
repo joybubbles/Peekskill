@@ -1,5 +1,6 @@
 PlayerInteraction = function() {
     this.characterCacheJSON = null;
+    this.characterRange = 1;
 
     this.getCharactersCloseToEachOther = function() {
         var characters = CharManager.getCharacters();
@@ -9,7 +10,7 @@ PlayerInteraction = function() {
             for(var otherCharacterId in characters) {
                 if (characterId != otherCharacterId) {
                     var otherCharPosition = CharManager.getCharacterPosition(otherCharacterId);
-                    if (charPosition.X == otherCharPosition.X && charPosition.Y == otherCharPosition.Y) {
+                    if (this.characterIsCloseBy(charPosition, otherCharPosition)) {
                         if (charactersCloseToEachOther[characterId] === undefined) {
                             charactersCloseToEachOther[characterId] = [];
                         }
@@ -29,7 +30,10 @@ PlayerInteraction = function() {
         return charactersCloseToEachOther;
     };
 
-    this.speak = function() {
-
+    this.characterIsCloseBy = function(charPosition, otherCharPosition) {
+        return charPosition.X + this.characterRange >= otherCharPosition.X &&
+            charPosition.X - this.characterRange <= otherCharPosition.X &&
+            charPosition.Y + this.characterRange >= otherCharPosition.Y &&
+            charPosition.Y - this.characterRange <= otherCharPosition.Y;
     }
 };

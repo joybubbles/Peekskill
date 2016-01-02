@@ -25,7 +25,7 @@ Communicator = function(charGFXManager) {
         var characterId = characterData.characterId;
         if (characterData.message) {
             var messageId = characterData.message.id;
-            if (this.lastMessage[characterId] === undefined && this.lastMessage[characterId] != messageId) {
+            if (this.lastMessage[characterId] === undefined || this.lastMessage[characterId] != messageId) {
                 this.lastMessage[characterId] = messageId;
                 this.charGFXManager.addSpeechBubble(characterId, characterData.message.text);
             }
