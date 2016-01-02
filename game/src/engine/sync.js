@@ -13,10 +13,6 @@ Sync = function() {
         if (this.hasTarget(characterData)) {
             var character = CharManager.getCharacter(characterData.characterId);
             if (character) {
-                if (Meteor.isClient) {
-                    character.setPosition(characterData.x, characterData.y);
-                }
-
                 CharManager.setCharacterDestination(characterId, characterData.targetX, characterData.targetY);
             }
         }
