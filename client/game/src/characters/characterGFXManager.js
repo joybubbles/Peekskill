@@ -26,6 +26,10 @@ CharacterGFXManager = function (mainContainer) {
         this.speechBubbles[characterId].x = (characterPosition.X * tileSize) + 75;
         this.speechBubbles[characterId].y = (characterPosition.Y * tileSize) - 25;
 		this.mainContainer.addChild(this.speechBubbles[characterId]);
+
+        createjs.Tween.get(this.speechBubbles[characterId])
+            .wait(3000)
+            .to({alpha:0, visible:false}, 500);
 	};
 
 	this.loadCharacterAnimations = function(stage) {
