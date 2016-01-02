@@ -1,4 +1,6 @@
 PlayerInteraction = function() {
+    this.characterCacheJSON = null;
+
     this.getCharactersCloseToEachOther = function() {
         var characters = CharManager.getCharacters();
         var charactersCloseToEachOther = {};
@@ -18,6 +20,12 @@ PlayerInteraction = function() {
             }
         }
 
+        var characterCacheJSON = JSON.stringify(charactersCloseToEachOther);
+        if (characterCacheJSON === this.characterCacheJSON) {
+            return {};
+        }
+
+        this.characterCacheJSON = characterCacheJSON;
         return charactersCloseToEachOther;
     };
 

@@ -6,6 +6,7 @@
 Communicator = function(charGFXManager) {
     this.charGFXManager = charGFXManager;
     var self = this;
+    this.lastMessage = [];
 
     Meteor.subscribe('characters');
     Tracker.autorun(function () {
@@ -15,9 +16,21 @@ Communicator = function(charGFXManager) {
             if (characterData.characterId) {
                 Sync.updateCharacter(characterData.characterId, characterData);
                 self.updateClientEmotionalState(characterData);
+                self.updateTextBubbles(characterData);
             }
         });
     });
+
+    this.updateTextBubbles = function(characterData) {
+        var characterId = characterData.characterId;
+        if (characterData.message) {
+            var messageId = characterData.message.id;
+            if (this.lastMessage[characterId] === undefined && this.lastMessage[characterId] != messageId) {
+                this.lastMessage[characterId] = messageId;
+                this.charGFXManager.addSpeechBubble(characterId, characterData.message.text);
+            }
+        }
+    };
 
     this.updateClient = function() {
         var characters = Characters.find();
@@ -25,6 +38,7 @@ Communicator = function(charGFXManager) {
         characters.forEach(function (characterData) {
             Sync.updateCharacter(characterData);
             self.updateClientEmotionalState(characterData);
+            self.updateTextBubbles(characterData);
         });
     };
 

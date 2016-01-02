@@ -14,7 +14,7 @@ Gfx = function() {
     this.getCharGFXManager = function() {
         return this.charGfxManager;
     }
-    
+
 	this.setup = function(level, gameLogic) {
 		this.mapLayout = level.getLayout();
         this.gameLogic = gameLogic;
@@ -28,7 +28,6 @@ Gfx = function() {
 		setupBackground(this.mapLayout);
 		this.charGfxManager = new CharacterGFXManager(this.mainContainer);
         this.charGfxManager.loadCharacterAnimations(this.mainContainer);
-
 		createjs.Ticker.addEventListener("tick", function(event) {
 			self.charGfxManager.setCharacterAnimations(stage, tileWidth, tileHeight);
             stage.update(event);

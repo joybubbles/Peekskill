@@ -1,9 +1,32 @@
+/* TODO Add character to a container and move that instead */
 CharacterGFXManager = function (mainContainer) {
 	var spriteBuilder = new CharacterSpriteBuilder();
 	this.mainContainer = mainContainer;
 	this.charSprites = [];
 	this.emotionalStateSprites = [];
+	this.speechBubbles = [];
 	var self = this;
+
+	this.addSpeechBubble = function(characterId, message) {
+		var character = CharManager.getCharacter(characterId);
+		var rect = new createjs.Shape();
+		var characterPosition = character.getPosition();
+		rect.graphics.beginFill("#fff").drawRoundRect(10, 10, message.length * 10, 30, 3);
+
+		var text = new createjs.Text(message, "16px Arial", "#000");
+		text.x = 20;
+		text.y = 30;
+		text.textBaseline = "alphabetic";
+		var textBox = new createjs.Container();
+		textBox.addChild(rect);
+		textBox.addChild(text);
+		this.speechBubbles[characterId] = textBox;
+        this.mainContainer.removeChild(this.speechBubbles[characterId]);
+        var tileSize = 40;
+        this.speechBubbles[characterId].x = (characterPosition.X * tileSize) + 75;
+        this.speechBubbles[characterId].y = (characterPosition.Y * tileSize) - 25;
+		this.mainContainer.addChild(this.speechBubbles[characterId]);
+	};
 
 	this.loadCharacterAnimations = function(stage) {
 		var chars = CharManager.getCharacters();
@@ -33,11 +56,19 @@ CharacterGFXManager = function (mainContainer) {
 		}
 	}
 
+	this.updateSpeechBubble = function(characterId, characterPos, tileWidth, tileHeight) {
+		if (this.speechBubbles[characterId]) {
+			this.speechBubbles[characterId].x = (characterPos.X * tileWidth) + 75;
+			this.speechBubbles[characterId].y = (characterPos.Y * tileHeight) - 25;
+		}
+	}
+
 	var characterWalk = function(characterSprite, currentPos ,tileWidth, tileHeight, characterId) {
 		characterSprite.x = currentPos.X * tileWidth;
 		characterSprite.y = currentPos.Y * tileHeight;
 		characterSprite.framerate = 6;
-		self.updateEmotionalStateSprite(characterId, currentPos, tileWidth, tileHeight, false);
+		self.updateEmotionalStateSprite(characterId, currentPos, tileWidth, tileHeight);
+		self.updateSpeechBubble(characterId, currentPos, tileWidth, tileHeight);
 	}
 	
 	this.setCharacterAnimations = function(stage, tileWidth, tileHeight) {
