@@ -13,7 +13,14 @@ Sync = function() {
         if (this.hasTarget(characterData)) {
             var character = CharManager.getCharacter(characterData.characterId);
             if (character) {
-                CharManager.setCharacterDestination(characterId, characterData.targetX, characterData.targetY);
+                var characterPosition = character.getPosition();
+                if (characterPosition.X != characterData.targetX && characterPosition.Y != characterData.targetY) {
+                    if (Meteor.isClient) {
+                        character.setPosition(characterData.x, characterData.y);
+                    }
+
+                    CharManager.setCharacterDestination(characterId, characterData.targetX, characterData.targetY);
+                }
             }
         }
     };
